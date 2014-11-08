@@ -68,7 +68,6 @@ class Msp430ElfGcc < Formula
       system 'make', 'install-host'
       system 'make', 'install-target-newlib'
       system 'make', 'install-target-libgloss'
-      end
     end
 
     chdir 'build' do
