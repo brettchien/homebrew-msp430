@@ -64,10 +64,10 @@ class Msp430ElfGcc < Formula
       system "./configure", *newlib_args
 
       system "make"
-      begin
-        system 'make', 'install'
-      rescue
-        system 'make', 'install'
+      system 'make', 'installdirs'
+      system 'make', 'install-host'
+      system 'make', 'install-target-newlib'
+      system 'make', 'install-target-libgloss'
       end
     end
 
@@ -76,8 +76,8 @@ class Msp430ElfGcc < Formula
       system 'make', 'install-target'
     end
 
-    raise 'foo'
-
-    info.rmtree
+    FileUtils.rm_rf "#{info}"
+    FileUtils.rm_rf "#{prefix}/lib/x86_64"
+    FileUtils.rm_rf "#{prefix}/share/man/man7"
   end
 end
