@@ -57,7 +57,12 @@ class Msp430ElfGcc < Formula
     mkdir 'build' do
       system '../configure', *args
       system 'make', 'all'
-      system 'make', 'install'
+      begin
+        system 'make', 'install'
+      rescue
+        # Try again... This seems to work... everytime.
+        system 'make', 'install'
+      end
     end
 
     info.rmtree
