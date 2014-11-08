@@ -30,7 +30,7 @@ class Msp430ElfGcc < Formula
       system 'mv', 'libgloss', "#{gccbuildpath}/libgloss"
     end
 
-    languages = %w[c]
+    languages = %w[c c++]
 
     args = [
       "--target=#{target}",
@@ -51,11 +51,9 @@ class Msp430ElfGcc < Formula
 
     mkdir 'build' do
       system '../configure', *args
-      system 'make all'
-      system 'make installdirs'
-
-      system 'make', 'install-target'
+      system 'make', 'all'
       system 'make', 'install-host'
+      system 'make', 'install-target'
     end
 
     info.rmtree
