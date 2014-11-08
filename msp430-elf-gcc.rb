@@ -53,8 +53,12 @@ class Msp430ElfGcc < Formula
       system '../configure', *args
       system 'make all'
       system 'make installdirs'
-      system 'make install-target'
-      system 'make install-host'
+
+      # Hack, remove unused dir.
+      system 'rm', '-rf', "#{prefix}/msp430-elf/include/bits"
+
+      system 'make', 'install-target'
+      system 'make', 'install-host'
     end
 
     info.rmtree
