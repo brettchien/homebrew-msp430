@@ -53,8 +53,8 @@ class Msp430ElfGcc < Formula
       system '../configure', *args
       system 'make all'
       system 'make installdirs'
-      system 'make install-target'
       system 'make install-host'
+      system 'make install-target'
     end
 
     info.rmtree
