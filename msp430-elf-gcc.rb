@@ -44,11 +44,27 @@ class Msp430ElfGcc < Formula
       system 'make', 'install-host'
     end
 
-    gccprefix = prefix
-    newlib = Formula.factory 'newlib'
+    newlib = Formula.factory "#{target}-newlib"
     newlib.brew do
-      prefix = gccprefix
-      install
+      newlib_args = [
+        "--prefix=#{prefix}",
+        "--target=#{target}",
+        "--disable-newlib-supplied-syscalls",
+        "--enable-newlib-reent-small",
+        "--disable-newlib-fseek-optimization",
+        "--disable-newlib-wide-orient",
+        "--enable-newlib-nano-formatted-io",
+        "--disable-newlib-io-float",
+        "--enable-newlib-nano-malloc",
+        "--disable-newlib-unbuf-stream-opt",
+        "--enable-lite-exit",
+        "--enable-newlib-global-atexit",
+        "--disable-nls"
+      ]
+
+      system "./configure", *newlib_args
+      system "make"
+      system "make install"
     end
 
     chdir 'build' do
