@@ -23,8 +23,7 @@ class Msp430ElfGcc < Formula
   def install
     target = 'msp430-elf'
     binutils = Formula.factory "#{target}-binutils"
-
-    ENV['PATH'] += ":#{binutils.prefix}/bin"
+    ENV['PATH'] += ":#{binutils.bin}:#{bin}"
 
     languages = %w[c c++]
 
