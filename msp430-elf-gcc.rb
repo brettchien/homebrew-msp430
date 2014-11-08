@@ -44,8 +44,10 @@ class Msp430ElfGcc < Formula
       system 'make', 'install-host'
     end
 
+    gccprefix = prefix
     newlib = Formula.factory 'newlib'
     newlib.brew do
+      prefix = gccprefix
       install
     end
 
