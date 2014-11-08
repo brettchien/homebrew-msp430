@@ -47,6 +47,7 @@ class Msp430ElfGcc < Formula
 
     newlib = Formula.factory "#{target}-newlib"
     newlib.brew do
+      mkdir "#{HOMEBREW_LOGS}/#{name}"
       newlib_args = [
         "--prefix=#{prefix}",
         "--target=#{target}",
