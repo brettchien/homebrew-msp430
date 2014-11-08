@@ -2,9 +2,9 @@ require 'formula'
 
 class Msp430ElfGcc < Formula
   homepage 'http://gcc.gnu.org'
-  url "http://ftpmirror.gnu.org/gcc/gcc-4.9.1/gcc-4.9.1.tar.bz2"
-  mirror "ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.9.1/gcc-4.9.1.tar.bz2"
-  sha1 "3f303f403053f0ce79530dae832811ecef91197e"
+  url 'http://ftpmirror.gnu.org/gcc/gcc-4.9.2/gcc-4.9.2.tar.bz2'
+  mirror 'ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.9.2/gcc-4.9.2.tar.bz2'
+  sha1 '79dbcb09f44232822460d80b033c962c0237c6d8'
 
   head 'svn://gcc.gnu.org/svn/gcc/branches/gcc-4_9-branch'
 
@@ -17,8 +17,8 @@ class Msp430ElfGcc < Formula
 
   # Fix 10.10 issues: https://gcc.gnu.org/viewcvs/gcc?view=revision&revision=215251
   patch do
-    url "https://raw.githubusercontent.com/DomT4/scripts/6c0e48921/Homebrew_Resources/Gcc/gcc1010.diff"
-    sha1 "083ec884399218584aec76ab8f2a0db97c12a3ba"
+    url 'https://raw.githubusercontent.com/DomT4/scripts/6c0e48921/Homebrew_Resources/Gcc/gcc1010.diff'
+    sha1 '083ec884399218584aec76ab8f2a0db97c12a3ba'
   end
 
   def install
@@ -30,10 +30,10 @@ class Msp430ElfGcc < Formula
 
     newlib = Formula.factory 'newlib'
     newlib.brew do
-      ohai "Moving newlib into GCC build tree"
-      system "mv", "newlib", "#{gccbuildpath}/newlib"
-      ohai "Moving libgloss into GCC build tree"
-      system "mv", "libgloss", "#{gccbuildpath}/libgloss"
+      ohai 'Moving newlib into GCC build tree'
+      system 'mv', 'newlib', "#{gccbuildpath}/newlib"
+      ohai 'Moving libgloss into GCC build tree'
+      system 'mv', 'libgloss', "#{gccbuildpath}/libgloss"
     end
 
     languages = %w[c c++]
