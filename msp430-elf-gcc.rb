@@ -58,7 +58,8 @@ class Msp430ElfGcc < Formula
         "--disable-newlib-unbuf-stream-opt",
         "--enable-lite-exit",
         "--enable-newlib-global-atexit",
-        "--disable-nls"
+        "--disable-nls",
+        "--with-as=#{binutils.bin}/#{target}-as"
       ]
 
       system "./configure", *newlib_args

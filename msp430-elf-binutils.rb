@@ -9,19 +9,23 @@ class Msp430ElfBinutils < Formula
 
   def install
     target = 'msp430-elf'
-    system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--program-prefix=#{target}-",
-                          "--infodir=#{info}",
-                          "--mandir=#{man}",
-                          "--libdir=#{lib}",
-                          "--disable-werror",
-                          "--enable-interwork",
-                          "--enable-multilib",
-                          "--enable-64-bit-bfd",
-                          "--disable-nls",
-                          "--enable-install-libbfd",
-                          "--target=#{target}"
+    args = [
+      "--disable-dependency-tracking",
+      "--prefix=#{prefix}",
+      "--program-prefix=#{target}-",
+      "--infodir=#{info}",
+      "--mandir=#{man}",
+      "--libdir=#{lib}",
+      "--disable-werror",
+      "--enable-interwork",
+      "--enable-multilib",
+      "--enable-64-bit-bfd",
+      "--disable-nls",
+      "--enable-install-libbfd",
+      "--target=#{target}"
+    ]
+
+    system "./configure", *args
     system "make"
     system "make", "install"
 
