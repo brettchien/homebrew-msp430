@@ -68,7 +68,11 @@ class Msp430ElfGcc < Formula
       system "./configure", *newlib_args
 
       system "make"
-      system "make install"
+      begin
+        system 'make', 'install'
+      rescue
+        system 'make', 'install'
+      end
     end
 
     chdir 'build' do
