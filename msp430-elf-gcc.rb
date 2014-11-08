@@ -1,26 +1,6 @@
 require 'formula'
 
 class Msp430ElfGcc < Formula
-  def arch
-    if Hardware::CPU.type == :intel
-      if MacOS.prefer_64_bit?
-        'x86_64'
-      else
-        'i686'
-      end
-    elsif Hardware::CPU.type == :ppc
-      if MacOS.prefer_64_bit?
-        'powerpc64'
-      else
-        'powerpc'
-      end
-    end
-  end
-
-  def osmajor
-    `uname -r`.chomp
-  end
-
   homepage 'http://gcc.gnu.org'
   url "http://ftpmirror.gnu.org/gcc/gcc-4.9.1/gcc-4.9.1.tar.bz2"
   mirror "ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.9.1/gcc-4.9.1.tar.bz2"
@@ -33,6 +13,7 @@ class Msp430ElfGcc < Formula
   depends_on 'mpfr2'
   depends_on 'cloog018'
   depends_on 'isl011'
+  depends_on 'msp430-elf-binutils'
 
   # Fix 10.10 issues: https://gcc.gnu.org/viewcvs/gcc?view=revision&revision=215251
   patch do
@@ -41,11 +22,24 @@ class Msp430ElfGcc < Formula
   end
 
   def install
-    ENV['PATH'] += ":/usr/local/Cellar/msp430-elf-binutils/gdb/bin/"
+    target = 'msp430-elf'
+    binutils = Formula.factory "#{target}-binutils"
+
+    ENV['PATH'] += ":#{binutils.prefix}/bin"
+    gccbuildpath = buildpath
+
+    newlib = Formula.factory 'newlib'
+    newlib.brew do
+      ohai "Moving newlib into GCC build tree"
+      system "mv", "newlib", "#{gccbuildpath}/newlib"
+      ohai "Moving libgloss into GCC build tree"
+      system "mv", "libgloss", "#{gccbuildpath}/libgloss"
+    end
 
     languages = %w[c c++]
 
     args = [
+      "--target=#{target}",
       "--prefix=#{prefix}",
       "--enable-languages=#{languages.join(',')}",
       "--program-prefix=msp430-elf-",
@@ -55,9 +49,9 @@ class Msp430ElfGcc < Formula
       "--with-cloog=#{Formula["cloog018"].opt_prefix}",
       "--with-isl=#{Formula["isl011"].opt_prefix}",
       "--with-system-zlib",
-      "--target=msp430-elf",
       "--disable-werror",
       "--disable-install-libiberty",
+      "--with-as=#{binutils.prefix}/bin/#{target}-as",
       "CFLAGS=-std=gnu89",
     ]
 
