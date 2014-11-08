@@ -34,6 +34,7 @@ class Msp430ElfGcc < Formula
       "--program-prefix=msp430-elf-",
       "--with-newlib",
       "--with-as=#{binutils.bin}/#{target}-as",
+      "--with-ld=#{binutils.bin}/#{target}-ld",
       "CFLAGS=-std=gnu89",
     ]
 
