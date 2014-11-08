@@ -9,8 +9,7 @@ class Newlib < Formula
   sha1 '364d569771866bf55cdbd1f8c4a6fa5c9cf2ef6c'
 
   def install
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}"
+    system "./configure", "--disable-debug", "--disable-dependency-tracking", "--prefix=#{prefix}"
     system "make"
     system "make install"
   end
