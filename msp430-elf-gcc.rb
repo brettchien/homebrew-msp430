@@ -25,15 +25,6 @@ class Msp430ElfGcc < Formula
     binutils = Formula.factory "#{target}-binutils"
 
     ENV['PATH'] += ":#{binutils.prefix}/bin"
-    gccbuildpath = buildpath
-
-    newlib = Formula.factory 'newlib'
-    newlib.brew do
-      ohai 'Moving newlib into GCC build tree'
-      system 'mv', 'newlib', "#{gccbuildpath}/newlib"
-      ohai 'Moving libgloss into GCC build tree'
-      system 'mv', 'libgloss', "#{gccbuildpath}/libgloss"
-    end
 
     languages = %w[c c++]
 
@@ -42,27 +33,26 @@ class Msp430ElfGcc < Formula
       "--prefix=#{prefix}",
       "--enable-languages=#{languages.join(',')}",
       "--program-prefix=msp430-elf-",
-      "--with-gmp=#{Formula["gmp4"].opt_prefix}",
-      "--with-mpfr=#{Formula["mpfr2"].opt_prefix}",
-      "--with-mpc=#{Formula["libmpc08"].opt_prefix}",
-      "--with-cloog=#{Formula["cloog018"].opt_prefix}",
-      "--with-isl=#{Formula["isl011"].opt_prefix}",
-      "--with-system-zlib",
-      "--disable-werror",
-      "--disable-install-libiberty",
-      "--with-as=#{binutils.prefix}/bin/#{target}-as",
+      "--with-newlib",
       "CFLAGS=-std=gnu89",
     ]
 
-    mkdir 'build' do
+    mkdir 'build'
+    chdir 'build' do
       system '../configure', *args
-      system 'make', 'all'
-      begin
-        system 'make', 'install'
-      rescue
-        # Try again... This seems to work... everytime.
-        system 'make', 'install'
-      end
+      system 'make', 'all-host'
+      system 'make', 'install-host'
+    end
+
+    newlib = Formula.factory 'newlib'
+    newlib.brew do
+      install
+    end
+
+    chdir 'build' do
+      system '../configure', *args
+      system 'make', 'all-target'
+      system 'make', 'install-target'
     end
 
     info.rmtree
