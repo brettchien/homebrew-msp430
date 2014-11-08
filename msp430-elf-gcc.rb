@@ -67,8 +67,6 @@ class Msp430ElfGcc < Formula
 
       system "./configure", *newlib_args
 
-      inreplace 'Makefile', 'mkdir', 'mkdir -p'
-      
       system "make"
       system "make install"
     end
@@ -76,12 +74,6 @@ class Msp430ElfGcc < Formula
     chdir 'build' do
       system 'make', 'all-target'
       system 'make', 'install-target'
-    end
-
-    includes = Formula.factory "#{target}-includes"
-    includes.brew do
-      ohai "Including TI support files"
-      include.install Dir['*']
     end
 
     info.rmtree
