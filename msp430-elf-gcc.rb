@@ -32,6 +32,7 @@ class Msp430ElfGcc < Formula
       "--prefix=#{prefix}",
       "--enable-languages=#{languages.join(',')}",
       "--program-prefix=msp430-elf-",
+      "--disable-nls",
       "--with-newlib",
       "--with-as=#{binutils.bin}/#{target}-as",
       "--with-ld=#{binutils.bin}/#{target}-ld",
@@ -70,9 +71,14 @@ class Msp430ElfGcc < Formula
     end
 
     chdir 'build' do
-      system '../configure', *args
       system 'make', 'all-target'
       system 'make', 'install-target'
+    end
+
+    includes = Formula.factory "#{target}-includes"
+    includes.brew do
+      ohai "Including TI support files"
+      include.install Dir['*']
     end
 
     info.rmtree
