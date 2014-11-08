@@ -7,9 +7,8 @@ class Msp430ElfGcc < Formula
   # mirror 'ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.9.2/gcc-4.9.2.tar.bz2'
   # sha1 '79dbcb09f44232822460d80b033c962c0237c6d8'
 
-  url 'http://ftpmirror.gnu.org/gcc/gcc-4.8.2/gcc-4.8.2.tar.bz2'
-  mirror 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.2/gcc-4.8.2.tar.bz2'
-  sha1 '810fb70bd721e1d9f446b6503afe0a9088b62986'
+  url 'http://ftpmirror.gnu.org/gcc/gcc-4.9.1/gcc-4.9.1.tar.bz2'
+  mirror 'http://ftp.gnu.org/gnu/gcc/gcc-4.9.1/gcc-4.9.1.tar.bz2'
 
   head 'svn://gcc.gnu.org/svn/gcc/branches/gcc-4_9-branch'
 
