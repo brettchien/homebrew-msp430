@@ -33,6 +33,7 @@ class Msp430ElfGcc < Formula
       "--enable-languages=#{languages.join(',')}",
       "--program-prefix=msp430-elf-",
       "--with-newlib",
+      "--with-as=#{binutils.bin}/#{target}-as",
       "CFLAGS=-std=gnu89",
     ]
 
@@ -59,7 +60,6 @@ class Msp430ElfGcc < Formula
         "--enable-lite-exit",
         "--enable-newlib-global-atexit",
         "--disable-nls",
-        "--with-as=#{binutils.bin}/#{target}-as"
       ]
 
       system "./configure", *newlib_args
