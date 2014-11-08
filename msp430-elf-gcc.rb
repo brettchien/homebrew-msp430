@@ -30,7 +30,7 @@ class Msp430ElfGcc < Formula
       system 'mv', 'libgloss', "#{gccbuildpath}/libgloss"
     end
 
-    languages = %w[c c++]
+    languages = %w[c]
 
     args = [
       "--target=#{target}",
@@ -53,9 +53,6 @@ class Msp430ElfGcc < Formula
       system '../configure', *args
       system 'make all'
       system 'make installdirs'
-
-      # Hack, remove unused dir.
-      system 'rm', '-rf', "#{prefix}/msp430-elf/include/bits"
 
       system 'make', 'install-target'
       system 'make', 'install-host'
