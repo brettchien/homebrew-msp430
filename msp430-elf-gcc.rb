@@ -48,7 +48,7 @@ class Msp430ElfGcc < Formula
 
     newlib = Formula.factory "#{target}-newlib"
     newlib.brew do
-      mkdir "#{HOMEBREW_LOGS}/#{newlib.name}"
+      system 'mkdir', '-p', "#{HOMEBREW_LOGS}/#{newlib.name}"
       newlib_args = [
         "--prefix=#{prefix}",
         "--target=#{target}",
@@ -66,6 +66,9 @@ class Msp430ElfGcc < Formula
       ]
 
       system "./configure", *newlib_args
+
+      inreplace 'Makefile', 'mkdir', 'mkdir -p'
+      
       system "make"
       system "make install"
     end
