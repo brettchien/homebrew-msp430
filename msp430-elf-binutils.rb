@@ -7,6 +7,9 @@ class Msp430ElfBinutils < Formula
 
   url "git://sourceware.org/git/binutils-gdb.git", :using => :git, :branch => "binutils-2_25-branch"
 
+  fails_with :clang
+  fails_with :llvm
+
   def install
     target = 'msp430-elf'
     args = [

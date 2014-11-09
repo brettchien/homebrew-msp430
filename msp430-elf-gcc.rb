@@ -16,6 +16,9 @@ class Msp430ElfGcc < Formula
   depends_on 'isl011'
   depends_on 'msp430-elf-binutils'
 
+  fails_with :clang
+  fails_with :llvm
+
   def install
     target = 'msp430-elf'
     binutils = Formula.factory "#{target}-binutils"
@@ -47,8 +50,8 @@ class Msp430ElfGcc < Formula
     newlib.brew do
       system 'mkdir', '-p', "#{HOMEBREW_LOGS}/#{newlib.name}"
       newlib_args = [
-        "--prefix=#{prefix}",
         "--target=#{target}",
+        "--prefix=#{prefix}",
         "--disable-newlib-supplied-syscalls",
         "--enable-newlib-reent-small",
         "--disable-newlib-fseek-optimization",
@@ -76,8 +79,7 @@ class Msp430ElfGcc < Formula
       system 'make', 'install-target'
     end
 
-    FileUtils.rm_rf "#{info}"
-    FileUtils.rm_rf "#{prefix}/lib/x86_64"
-    FileUtils.rm_rf "#{prefix}/share/man/man7"
+    info.rmtree
+    share.rmtree
   end
 end

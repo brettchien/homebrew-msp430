@@ -8,7 +8,9 @@ class Msp430ElfIncludes < Formula
   depends_on 'msp430-elf-gcc'
 
   def install
-    gcc = Formula.factory 'msp430-elf-gcc'
-    gcc.include.install Dir['*']
+    FileUtils.mkdir_p "#{include}/msp430"
+    FileUtils.mkdir_p "#{lib}/msp430/ldscripts"
+    FileUtils.cp Dir.glob('*.h'), "#{include}/msp430"
+    FileUtils.cp Dir.glob('*.ld'), "#{lib}/msp430/ldscripts"
   end
 end
