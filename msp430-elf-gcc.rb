@@ -9,11 +9,6 @@ class Msp430ElfGcc < Formula
 
   head 'svn://gcc.gnu.org/svn/gcc/branches/gcc-4_9-branch'
 
-  depends_on 'gmp4'
-  depends_on 'libmpc08'
-  depends_on 'mpfr2'
-  depends_on 'cloog018'
-  depends_on 'isl011'
   depends_on 'msp430-elf-binutils'
 
   fails_with :clang
