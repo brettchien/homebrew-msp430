@@ -32,6 +32,7 @@ class Msp430ElfGcc < Formula
       "--with-newlib",
       "--with-as=#{binutils.bin}/#{target}-as",
       "--with-ld=#{binutils.bin}/#{target}-ld",
+      "--enable-version-specific-runtime-libs",
       "CFLAGS=-std=gnu89",
     ]
 
