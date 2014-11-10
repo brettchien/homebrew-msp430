@@ -76,5 +76,15 @@ class Msp430ElfGcc < Formula
 
     info.rmtree
     share.rmtree
+
+    def caveats; <<-EOS.unindent
+      Installing this package along side gcc has been known to result in linking errors.
+      The following is a workaround for dealing with those linking errors:
+        brew unlink gcc
+        mkdir /usr/local/lib/gcc
+        brew link gcc
+        brew link msp430-elf-gcc
+      EOS
+    end
   end
 end
